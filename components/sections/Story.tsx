@@ -24,7 +24,8 @@ export default function Story() {
     target: portrait,
     offset: ["start 80%", "start 30%"],
   });
-  const clipInset = useTransform(clipProgress, [0, 1], (v) => `inset(0 0 ${v}% 0)`);
+  const clipRaw = useTransform(clipProgress, [0, 1], [0, 100]);
+  const clipInset = useTransform(clipRaw, (v) => `inset(0 0 ${v}% 0)`);
 
   return (
     <section
