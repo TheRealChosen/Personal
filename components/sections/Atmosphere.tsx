@@ -98,7 +98,8 @@ function GalleryTile({
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
-  const clipInset = useTransform(scrollYProgress, [0, 0.6], (v) => `inset(0 0 ${v}% 0)`);
+  const clipRaw = useTransform(scrollYProgress, [0, 0.6], [0, 100]);
+  const clipInset = useTransform(clipRaw, (v) => `inset(0 0 ${v}% 0)`);
 
   return (
     <figure
