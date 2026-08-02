@@ -1,26 +1,328 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ───────────────────────────────────────────────────────────
+   Hoekman — Brand Theme
+   Dark espresso + morning sunlight + cream + warm wood
+   ─────────────────────────────────────────────────────────── */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Surfaces */
+  --color-paper: #faf7f0;
+  --color-cream: #f3ede0;
+  --color-cream-deep: #e6dcc6;
+  --color-cream-warm: #d9c9a8;
+
+  /* Espresso depth */
+  --color-espresso: #1c1612;
+  --color-espresso-2: #2b2118;
+  --color-espresso-3: #3d2f24;
+  --color-espresso-4: #5a4738;
+
+  /* Wood & earth */
+  --color-wood: #785a46;
+  --color-wood-light: #96754f;
+  --color-wood-faded: #b89673;
+  --color-walnut: #4a3a2c;
+
+  /* Botanical accents */
+  --color-terracotta: #c2755a;
+  --color-terracotta-soft: #d89478;
+  --color-gold: #d4a574;
+  --color-gold-pale: #e5c38a;
+  --color-sage: #8b9170;
+  --color-burnt: #8b4513;
+
+  /* Typography */
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-body: var(--font-manrope), -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Motion easings */
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.87, 0, 0.13, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ───────────────────── Base ───────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-espresso);
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "ss02", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-espresso);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+::selection {
+  background: var(--color-espresso);
+  color: var(--color-cream);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--color-espresso);
+}
+
+p {
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
+
+/* ───────────────────── Utilities ───────────────────── */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.tracking-editorial {
+  letter-spacing: -0.04em;
+}
+
+.tracking-broad {
+  letter-spacing: 0.32em;
+}
+
+/* Subtle organic grain on surfaces */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Wood-warm horizontal rule */
+.rule-warm {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-walnut) 18%,
+    var(--color-wood) 50%,
+    var(--color-walnut) 82%,
+    transparent
+  );
+  height: 1px;
+  opacity: 0.4;
+}
+
+/* Cinematic gradient atmosphere */
+.atmo-warm {
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 30% 0%,
+      rgba(212, 165, 116, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 100% 100%,
+      rgba(120, 90, 70, 0.16),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 40% 30% at 0% 100%,
+      rgba(229, 195, 138, 0.14),
+      transparent 70%
+    ),
+    var(--color-paper);
+}
+
+.pad-x {
+  padding-left: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
+}
+
+/* Image hover — subtle warmth */
+.warmth {
+  transition: filter 0.8s var(--ease-cinematic),
+    transform 0.8s var(--ease-cinematic);
+  filter: saturate(0.92) contrast(1.02);
+}
+
+.warmth:hover {
+  filter: saturate(1.05) contrast(1.04) sepia(0.04);
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Soft pulse for live "open" indicator */
+@keyframes softPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.4); }
+}
+.soft-pulse {
+  animation: softPulse 2.4s var(--ease-soft) infinite;
+}
+
+/* Reveal line */
+@keyframes drawLine {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.draw-line {
+  transform-origin: left center;
+  animation: drawLine 1.4s var(--ease-cinematic) forwards;
+}
+
+/* Spline safe-canvas */
+.spline-host {
+  position: relative;
+}
+.spline-host canvas {
+  outline: none !important;
+}
+
+/* Editorial drop cap — used on the first paragraph of Story.
+   True CSS initial-letter gives a magazine-grade look that no
+   `first-letter:` Tailwind utility can match. */
+.dropcap::first-letter {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-espresso);
+  float: left;
+  initial-letter: 3;
+  -webkit-initial-letter: 3;
+  margin: 0.05em 0.18em -0.05em -0.05em;
+  line-height: 0.85;
+}
+
+/* Editorial stamp / mark — replaces SaaS pills for menu tags.
+   Small uppercase tracked text with a single hairline underline,
+   as if hand-engraved on a copper plate. */
+.stamp {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  padding-bottom: 2px;
+  border-bottom-width: 1px;
+}
+.stamp-signature { color: var(--color-terracotta); border-color: color-mix(in oklch, var(--color-terracotta) 55%, transparent); }
+.stamp-season    { color: var(--color-sage);        border-color: color-mix(in oklch, var(--color-sage)        55%, transparent); }
+.stamp-homemade  { color: var(--color-wood);        border-color: color-mix(in oklch, var(--color-wood)        55%, transparent); }
+
+/* Subtle ink run for fine print — small italic typography unifier */
+.ink-note {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: color-mix(in oklch, var(--color-espresso) 65%, transparent);
+  letter-spacing: 0.01em;
+}
+
+/* Atmosphere — scatter tile hover that preserves the curated
+   translateY offset while settling rotation to 0. The CSS variables
+   are set inline per-tile so the scatter stays hand-placed, but on
+   hover the tile "rights itself" without losing its resting y. */
+.atmosphere-tile {
+  transform: translateY(var(--tile-y, 0)) rotate(var(--tile-r, 0deg));
+}
+.atmosphere-tile:hover,
+.atmosphere-tile:focus-visible {
+  transform: translateY(var(--tile-y, 0)) rotate(0deg) !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Selection — keep consistent across input fields too */
+input::selection,
+textarea::selection {
+  background: var(--color-espresso);
+  color: var(--color-cream);
 }
