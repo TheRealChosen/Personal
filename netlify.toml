@@ -4,3 +4,10 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Keep the static export's root document available on direct visits and
+# browser refreshes. Hash links remain client-side and are unaffected.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
